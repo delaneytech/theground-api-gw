@@ -1,2 +1,27 @@
 server:
   port: 8080
+
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: function-api
+          uri: http://localhost:8081/functions
+          predicates:
+            - Path=/functions*,/functions/*
+        - id: topic-api
+          uri: http://localhost:8084/topics
+          predicates:
+            - Path=/topics*,/topics/**
+      enabled: true
+logging:
+  level:
+    root: info
+eureka:
+  instance:
+    hostname: topic-api.api
+    home-page-url: https://api.theground.io
